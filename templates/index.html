@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Component Detection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .container { margin-left: 270px; padding-top: 20px; }
+        .btn-container { margin-left: 270px; padding-top: 20px; display: none; }
+        .left-panel img { width: 100%; max-height: 500px; object-fit: contain; }
+        .right-panel { padding-left: 20px; }
+        .tab-content { padding-top: 10px; }
+        
+        /* Sidebar Styles */
+        .sidebar { width: 250px; position: fixed; left: 0; top: 0; bottom: 0; background: #f8f9fa; padding: 15px; overflow-y: auto; }
+        .sidebar h5 { text-align: center; margin-top: 15px; }
+        .sidebar hr { margin: 10px 0; }
+        .btn-section { text-align: center; margin-bottom: 15px; }
+
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            margin: 20px;
+        }
+
+        .summary-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            border-radius: 10px;
+        }
+        .summary-box {
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            background: #e9ecef;
+            border-radius: 8px;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .content-container {
+            padding: 20px;
+        }
+        .wpcb-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .wpcb-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .wpcb-details {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+
+        /* Class Detection */
+        .toggle-container {
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .arrow {
+            margin-right: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .rotate {
+            transform: rotate(90deg);
+        }
+
+        .component-list {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .toggle-content {
+            display: none;
+            padding-left: 20px;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+    <div class="sidebar">
+        <!-- Section 1: Single Button -->
+        <div class="btn-section">
+            <button id="detectionBtn" class="btn btn-primary w-100">Run Detection</button>
+        </div>
+        <hr>
+        <!-- Section 2: Detection History -->
+        <h5>Detection History</h5>
+
+            <!-- Dynamically Generated Buttons -->
+        {% for file in file_names %}
+            <button id="btn{{ loop.index }}" class="btn btn-secondary w-100 my-1 history-btn">
+                {{ file }}
+            </button>
+        {% endfor %}
+
+    </div>
+
+    <!--Run Detection --> 
+    <div class="container">
+        <div id="detection-content" >
+            <div class="row">
+                <div class="col-md-6 left-panel">
+                    <h4>Processed Image</h4>
+                    <img id="output-image" src="{{ processed_image }}" alt="Processed Image">
+                </div>
+                <div class="col-md-6 right-panel">
+                    <h4>Detection Results</h4>
+                    <ul class="nav nav-tabs" id="resultTabs">
+                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab1-content">Detected Components</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2-content">Metal Content</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3-content">Price Estimation</a></li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane fade show active" id="tab1-content">
+                            <table class="table table-striped">
+                                <thead><tr><th>Electronic Component</th><th>Number of Detected</th></tr></thead>
+                                <tbody>{% for type, detected in detected_components.items() %}<tr><td>{{ type }}</td><td>{{ detected }}</td></tr>{% endfor %}</tbody>
+                                <thead><tr><th>Total</th><th>{{ total_detectedEC }}</th></tr></thead>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="tab2-content">
+                            <h5>Breakdown per Component</h5><br>
+                            {% for component, data in metal_breakdown.items() %}
+                                <h6>Electronic Component: {{ data.category }} | Quantity: {{ data.count }}</h6>
+                                <table class="table table-striped">
+                                    <thead><tr><th>Metals</th><th>Weight (mg)</th><th>Metals</th><th>Weight (mg)</th></tr></thead>
+                                    <tbody>
+                                        {% set metals_list = data.metals.items() | list %}
+                                        {% for i in range(0, metals_list | length, 2) %}
+                                            <tr>
+                                                <td>{{ metals_list[i][0].capitalize() }}</td>
+                                                <td>{{ metals_list[i][1] | round(4) }}</td>
+                                                {% if i + 1 < metals_list | length %}
+                                                    <td>{{ metals_list[i+1][0].capitalize() }}</td>
+                                                    <td>{{ metals_list[i+1][1] | round(4) }}</td>
+                                                {% else %}
+                                                    <td></td><td></td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table><br>
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane fade" id="tab3-content">
+                            <table class="table table-striped">
+                                <thead><tr><th>Metal</th><th>Weight (mg)</th><th>Market Price (Peso)</th></tr></thead>
+                                <tbody>
+                                    {% for metal, total in total_metals.items() %}
+                                        <tr><td>{{ metal.capitalize() }}</td><td>{{ total | round(4) }}</td><td>{{ total_price[metal] | round(4) }}</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                                <thead><tr><th>Total Price</th><th></th><th>{{ total_value | round(4)}}</th></tr></thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Content Section -->
+    <div class="btn-container"></div>
+
+    <!-- Place script here, before closing </body> -->
+    <script>
+        function capitalizeFirstLetter(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function setupHistoryButton(buttonId, fileName) {
+        let button = this;  
+        button.disabled = true;
+
+            document.getElementById(buttonId).addEventListener("click", function() {
+                fetch(`/get_json_data?file=${fileName}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            alert("Error: " + data.error);
+                            return;
+                        }
+
+                        document.getElementById("detection-content").style.display = "none";
+                        document.querySelector(".btn-container").style.display = "block";
+                        document.querySelectorAll(".btn-container > div").forEach(div => div.style.display = "none");
+
+                        let contentDiv = document.getElementById(buttonId + "-content");
+                        if (!contentDiv) {
+                            contentDiv = document.createElement("div");
+                            contentDiv.id = buttonId + "-content";
+                            contentDiv.classList.add("content-section");
+                            document.querySelector(".btn-container").appendChild(contentDiv);
+                        }
+
+                        contentDiv.innerHTML = `
+                            
+                            <div class="header">WPCB Detection System</div>
+                            <div class="summary-container">
+                                <div class="summary-box"><strong>Total WPCB Detected:</strong> ${data.total_wpcb}</div>
+                                <div class="summary-box"><strong>Total Classes Detected:</strong> ${data.total_classes}</div>
+                                <div class="summary-box"><strong>Total Estimated Price:</strong> ₱${data.total_price_history}</div>
+                            </div>
+                            <div class="content-container">
+                                ${data.wpcb_data.map((pcb, index) => {
+                                    let uniqueId = `${buttonId}-pcb-${index}`;
+                                    return `
+                                        <div class="wpcb-card">
+                                            <div class="wpcb-title">WPCB #${pcb.pcb_id}</div>
+                                            <div class="wpcb-details">
+                                                <div class="toggle-container" onclick="toggleComponents('${uniqueId}-components', '${uniqueId}-arrow')">
+                                                    <span id="${uniqueId}-arrow" class="arrow">▶</span> Detected Components:
+                                                </div>
+                                                <ul id="${uniqueId}-components" class="component-list" style="display: none;">
+                                                    ${Object.entries(pcb.detected_components).map(([classId, count]) => `<li>Class ${classId}: ${count}</li>`).join('')}
+                                                </ul>
+
+                                                <div class="toggle-container" onclick="toggleComponents('${uniqueId}-metal', '${uniqueId}-arrow-metal')">
+                                                    <span id="${uniqueId}-arrow-metal" class="arrow">▶</span> Metal Breakdown:
+                                                </div>
+                                                <ul id="${uniqueId}-metal" class="component-list" style="display: none;">
+                                                    ${Object.values(pcb.metal_breakdown).map(breakdown => `
+                                                        <li>${breakdown.class_name} (${breakdown.category}):</li>
+                                                        <ul>
+                                                            ${Object.entries(breakdown.metals).map(([metal, amount]) => `<li>${capitalizeFirstLetter(metal)}: ${amount}g</li>`).join('')}
+                                                        </ul>
+                                                    `).join('')}
+                                                </ul>
+
+                                                <div class="toggle-container" onclick="toggleComponents('${uniqueId}-price', '${uniqueId}-arrow-price')">
+                                                    <span id="${uniqueId}-arrow-price" class="arrow">▶</span> Price Estimation:
+                                                </div>
+                                                <ul id="${uniqueId}-price" class="component-list" style="display: none;">
+                                                    ${Object.entries(pcb.total_price).map(([metal, price]) => `<li>${capitalizeFirstLetter(metal)}: ₱${price.toFixed(2)}</li>`).join('')}
+                                                </ul>
+
+                                                <strong>Total Value:</strong> ₱${pcb.total_value.toFixed(2)}
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        `;
+
+                        contentDiv.style.display = "block";
+                        button.disabled = false;
+                    })
+                    .catch(error => console.error("Error loading data:", error));
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            {% for file in file_names %}
+                setupHistoryButton("btn{{ loop.index }}", "{{ file }}");
+            {% endfor %}
+        });
+
+        function toggleComponents(listId, arrowId) {
+            let list = document.getElementById(listId);
+            let arrow = document.getElementById(arrowId);
+            if (!list || !arrow) return; // Prevent errors
+
+            if (list.style.display === "none") {
+                list.style.display = "block";
+                arrow.textContent = "▼";
+            } else {
+                list.style.display = "none";
+                arrow.textContent = "▶";
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log(document.getElementById("btn1")); // Debugging
+            console.log(document.getElementById("detection-content")); // Debugging
+            console.log(document.getElementById("btn1-content")); // Debugging
+
+            document.getElementById("detectionBtn").addEventListener("click", function() {
+                document.getElementById("detection-content").style.display = "block";
+                document.querySelector(".btn-container").style.display = "none"; 
+            });
+
+ 
+        // function setupHistoryButton(buttonId, contentId) {
+        //     document.getElementById(buttonId).addEventListener("click", function() {
+        //         document.getElementById("detection-content").style.display = "none";
+        //         document.querySelector(".btn-container").style.display = "block";
+
+        //         // Hide all content before showing the selected one
+        //         document.querySelectorAll(".btn-container > div").forEach(div => {
+        //             div.style.display = "none";
+        //         });
+
+        //         // Show the clicked button's content
+        //         document.getElementById(contentId).style.display = "block";
+        //     });
+        // }
+
+        //     setupHistoryButton("btn1", "btn1-content");
+        //     setupHistoryButton("btn2", "btn2-content");
+        //     setupHistoryButton("btn3", "btn3-content");
+        //     setupHistoryButton("btn4", "btn4-content");
+        //     setupHistoryButton("btn5", "btn5-content");
+        });
+    </script>
+
+
+
+
+</body>
+</html>

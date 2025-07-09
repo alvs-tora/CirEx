@@ -1,0 +1,23 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>logo4.png</file>
+    <file>the_project.png</file>
+    <file>log-out.svg</file>
+    <file>users.svg</file>
+    <file>userIcon.png</file>
+    <file>chevrons-right.svg</file>
+    <file>chevrons-left.svg</file>
+    <file>settings.svg</file>
+    <file>bookmark.svg</file>
+    <file>camera.svg</file>
+    <file>logo3.png</file>
+    <file>logo2.png</file>
+    <file>logo.png</file>
+    <file>video-off.svg</file>
+    <file>x.svg</file>
+    <file>circle.svg</file>
+    <file>check2.svg</file>
+    <file>check.svg</file>
+    <file>nocam.png</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1711</width>
+    <height>1026</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QWidget" name="saved_records" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>1477</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1800</width>
+       <height>1800</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_20">
+      <item>
+       <widget class="QWidget" name="component1_db2" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>380</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift SemiBold</family>
+         </font>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_21">
+         <item>
+          <widget class="QLabel" name="historical_summary">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Microsoft Tai Le</family>
+             <pointsize>16</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 170, 127);
+border-radius: 15px;</string>
+           </property>
+           <property name="text">
+            <string>HISTORICAL SUMMARY</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_2" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>140</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>147</height>
+            </size>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="total_operation">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Total Operation</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="total_component">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Total Component</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="total_price_estimated">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Total Price Estimated</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="TC_value">
+              <property name="font">
+               <font>
+                <pointsize>40</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>350</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="TO_value">
+              <property name="font">
+               <font>
+                <pointsize>40</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>20</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QLabel" name="TPE_value">
+              <property name="font">
+               <font>
+                <pointsize>40</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>1400</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="TW_value">
+              <property name="font">
+               <font>
+                <pointsize>40</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>90</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="tota_wpcb">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Total Waste PCB</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_4" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>71</height>
+            </size>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="gold">
+              <property name="text">
+               <string>GOLD</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="silver">
+              <property name="text">
+               <string>SILVER</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="copper">
+              <property name="text">
+               <string>COPPER</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="aluminum">
+              <property name="text">
+               <string>ALUMINUM</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="lead">
+              <property name="text">
+               <string>LEAD</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QLabel" name="nickel">
+              <property name="text">
+               <string>NICKEL</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QLabel" name="tin">
+              <property name="text">
+               <string>TIN</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="7">
+             <widget class="QLabel" name="zinc">
+              <property name="text">
+               <string>ZINC</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="8">
+             <widget class="QLabel" name="platinum">
+              <property name="text">
+               <string>PLATINUM</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="9">
+             <widget class="QLabel" name="palladium">
+              <property name="text">
+               <string>PALLADIUM</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="10">
+             <widget class="QLabel" name="chromium">
+              <property name="text">
+               <string>CHROMIUM</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="11">
+             <widget class="QLabel" name="iron">
+              <property name="text">
+               <string>IRON</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="gold_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="silver_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="coppe_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLabel" name="aluminum_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QLabel" name="lead_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QLabel" name="nickel_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="6">
+             <widget class="QLabel" name="tin_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="7">
+             <widget class="QLabel" name="zinc_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="8">
+             <widget class="QLabel" name="platinum_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="9">
+             <widget class="QLabel" name="palladium_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="10">
+             <widget class="QLabel" name="chromium_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="11">
+             <widget class="QLabel" name="iron_value">
+              <property name="text">
+               <string>50.952</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_3" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>675</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>675</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_22">
+         <item>
+          <widget class="QLabel" name="saved_records_2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Microsoft Tai Le</family>
+             <pointsize>16</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 170, 127);
+border-radius: 15px;</string>
+           </property>
+           <property name="text">
+            <string>SAVED RECORDS</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_5" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>600</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>600</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QListWidget" name="operation_tab">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>190</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAsNeeded</enum>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="tabKeyNavigation">
+               <bool>false</bool>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <property name="viewMode">
+               <enum>QListView::ListMode</enum>
+              </property>
+              <item>
+               <property name="text">
+                <string>Tab 1</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Tab 2</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Tab 3</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Tab 4</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QStackedWidget" name="operation_content">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="stack1">
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                 <widget class="QWidget" name="widget" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <item>
+                    <widget class="QLabel" name="label">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Plain</enum>
+                     </property>
+                     <property name="text">
+                      <string>Image</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="widget_7" native="true">
+                     <layout class="QVBoxLayout" name="verticalLayout_2">
+                      <item>
+                       <widget class="QLabel" name="label_2">
+                        <property name="text">
+                         <string>Report</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_6" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <item>
+                    <widget class="QGroupBox" name="groupBox">
+                     <property name="title">
+                      <string>Metal Content Breakdown</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="stack2">
+               <widget class="QLabel" name="label_3">
+                <property name="geometry">
+                 <rect>
+                  <x>130</x>
+                  <y>60</y>
+                  <width>55</width>
+                  <height>16</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>tab 2</string>
+                </property>
+               </widget>
+              </widget>
+              <widget class="QWidget" name="stack3">
+               <widget class="QLabel" name="label_4">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>140</y>
+                  <width>55</width>
+                  <height>16</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>tab3</string>
+                </property>
+               </widget>
+              </widget>
+              <widget class="QWidget" name="stack4">
+               <widget class="QLabel" name="label_5">
+                <property name="geometry">
+                 <rect>
+                  <x>150</x>
+                  <y>100</y>
+                  <width>55</width>
+                  <height>16</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>tab 4</string>
+                </property>
+               </widget>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
