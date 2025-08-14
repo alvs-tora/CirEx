@@ -9,6 +9,7 @@ from PyQt5 import (QtWidgets, QtCore, uic)
 
 from ultralytics import YOLO
 from ..database import DatabaseConnection
+from ..config import UI_PATH, RESOURCES_PATH
 from .. import __version__
 
 
@@ -25,13 +26,8 @@ class Login(QDialog):
         self.pro_id = None  # Store the logged-in user's project ID
         self.db = DatabaseConnection(use_local=True)
 
-        # Paths for UI and resources
-        base_path = os.path.dirname(os.path.abspath(__file__)) 
-        ui_path = os.path.join(base_path, "ui")
-        resources_path = os.path.join(base_path, "resources", "icon")
-
         # Load the login UI file
-        uic.loadUi(os.path.join(ui_path, "login.ui"), self)
+        uic.loadUi(os.path.join(UI_PATH, "login.ui"), self)
 
         # Configure window appearance
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
@@ -42,15 +38,15 @@ class Login(QDialog):
         self.version_label.setText(f"version: {__version__}")
 
         # Setup icons for username and password fields
-        user_icon = QIcon(os.path.join(resources_path, "user.svg"))
-        password_icon = QIcon(os.path.join(resources_path, "lock.svg"))
+        user_icon = QIcon(os.path.join(RESOURCES_PATH, "user.svg"))
+        password_icon = QIcon(os.path.join(RESOURCES_PATH, "lock.svg"))
 
         self.username.addAction(QAction(user_icon, "", self.username), QLineEdit.LeadingPosition)
         self.password.addAction(QAction(password_icon, "", self.password), QLineEdit.LeadingPosition)
 
         # Set logos
-        self.usersIcon.setPixmap(QPixmap(os.path.join(resources_path, "logo2.png")))
-        self.logo.setPixmap(QPixmap(os.path.join(resources_path, "the_project.png")))
+        self.usersIcon.setPixmap(QPixmap(os.path.join(RESOURCES_PATH, "logo2.png")))
+        self.logo.setPixmap(QPixmap(os.path.join(RESOURCES_PATH, "the_project.png")))
 
         # Button click events
         self.login.clicked.connect(self.check_login)

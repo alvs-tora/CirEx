@@ -1,45 +1,36 @@
 
-import sys
-import os
-import threading
-import cv2
-import pymysql
-import traceback
-
+import sys, os, threading, cv2, pymysql, traceback
 from PyQt5.QtWidgets import (QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, 
                              QMainWindow, QTableWidgetItem, QFrame, QGroupBox,QHBoxLayout, QStyleOptionTabWidgetFrame,
                              QListWidget, QSpacerItem, QSizePolicy, QMessageBox, QHeaderView, QTableWidget)
 from PyQt5.QtGui import QImage, QPixmap, QPainter, QColor, QFont, QGuiApplication, QIcon
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QSize
 from PyQt5 import uic, QtWidgets, QtCore
-
 from ultralytics import YOLO
 from datetime import datetime
-
-from app.database import DatabaseConnection
-from app.database import DatabaseFunction
-from app.gui import run_login_window
-from app.gui import DashboardWidget
-from app.gui import userHistorydWidget                                                                                                  
+from app.database import DatabaseConnection                     # type: ignore
+from app.database import DatabaseFunction                       # type: ignore
+from app.gui import run_login_window                            # type: ignore
+from app.gui import DashboardWidget                             # type: ignore
+from app.gui import userHistorydWidget                          # type: ignore
+from app import MODEL_PATH, UI_PATH, RESOURCES_PATH             # type: ignore                                                                                 
 
 class MyApp(QMainWindow):
     def __init__(self, pro_id):
         super().__init__()
     
-        self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        mPath = f"{self.BASE_DIR}/model"
-        MODEL_PATH = os.path.join(mPath, "P3-best.pt")
+        # Load Model
         self.model = YOLO(MODEL_PATH)
 
         # Load UI dynamically
-        uic.loadUi(f"{self.BASE_DIR}/ui/main.ui", self)  
+        uic.loadUi(os.path.join(UI_PATH, "main.ui"), self)  
         self.showFullScreen()
 
-        
+        # Database connection
         self.db_connection = DatabaseConnection(use_local=True)
         self.db_function = DatabaseFunction()
 
-         # Load test widget and extract 'dashboard'
+        # Load test widget and extract 'dashboard'
         component = DashboardWidget()
         self.dashboard = component.dashboard
         self.saved_record = component.saved_record
@@ -85,8 +76,8 @@ class MyApp(QMainWindow):
         self.pro_id = pro_id
 
 
-        self.output_dir = f"{self.BASE_DIR}/saved-image"
-        os.makedirs(self.output_dir, exist_ok=True)
+        #self.output_dir = f"{self.BASE_DIR}/saved-image"
+        #os.makedirs(self.output_dir, exist_ok=True)
 
         self.wpcb_detection.horizontalHeader().setVisible(True)
 
