@@ -1,4 +1,3 @@
-
 import sys, os, pymysql
 
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QFrame, QGroupBox, QHBoxLayout,
@@ -10,66 +9,88 @@ from PyQt5 import (QtWidgets, QtCore, uic)
 
 from ultralytics import YOLO
 from ..database import DatabaseConnection
-
 from .. import __version__
-print(f"App Version: {__version__}")
+
 
 class Login(QDialog):
+    """
+    Login dialog that handles user authentication via MySQL database.
+    Displays a fullscreen login window with username/password input,
+    validates the user, and stores the authenticated user's project ID.
+    """
+
     def __init__(self):
+        """Initialize the login dialog, set up UI, icons, and database connection."""
         super().__init__()
-        self.pro_id = None  # Store the pro_id here
-        
+        self.pro_id = None  # Store the logged-in user's project ID
         self.db = DatabaseConnection(use_local=True)
 
+        # Paths for UI and resources
         base_path = os.path.dirname(os.path.abspath(__file__)) 
-        ui_path = base_path + "\\ui"
-        resources_path = base_path + "\\resources\\icon"
+        ui_path = os.path.join(base_path, "ui")
+        resources_path = os.path.join(base_path, "resources", "icon")
 
-        uic.loadUi(f"{ui_path}\\login.ui", self)
+        # Load the login UI file
+        uic.loadUi(os.path.join(ui_path, "login.ui"), self)
+
+        # Configure window appearance
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground, False)
         self.showFullScreen()
 
+        # Show version info
         self.version_label.setText(f"version: {__version__}")
 
-        # Create an action with an icon
-        user_icon = QIcon(f"{resources_path}\\user.svg")  # Path to your icon
-        password_icon = QIcon(f"{resources_path}\\lock.svg")
+        # Setup icons for username and password fields
+        user_icon = QIcon(os.path.join(resources_path, "user.svg"))
+        password_icon = QIcon(os.path.join(resources_path, "lock.svg"))
 
-        user_action = QAction(user_icon, "", self.username)
-        password_action = QAction(password_icon, "", self.password)
+        self.username.addAction(QAction(user_icon, "", self.username), QLineEdit.LeadingPosition)
+        self.password.addAction(QAction(password_icon, "", self.password), QLineEdit.LeadingPosition)
 
-        # Add the action to the line edit (left side)
-        self.username.addAction(user_action, QLineEdit.LeadingPosition)
-        self.password.addAction(password_action, QLineEdit.LeadingPosition)
+        # Set logos
+        self.usersIcon.setPixmap(QPixmap(os.path.join(resources_path, "logo2.png")))
+        self.logo.setPixmap(QPixmap(os.path.join(resources_path, "the_project.png")))
 
-        self.usersIcon.setPixmap(QPixmap(f"{resources_path}\\logo2.png"))
-
-        self.logo.setPixmap(QPixmap(f"{resources_path}\\the_project.png"))
+        # Button click events
         self.login.clicked.connect(self.check_login)
         self.exit.clicked.connect(self.handle_exit)
 
-
     def keyPressEvent(self, event):
+        """
+        Handle Enter/Return key to trigger login.
+        Otherwise, pass event to the default keyPressEvent handler.
+        """
         if event.key() in (Qt.Key_Return, Qt.Key_Enter):
             self.check_login()
         else:
             super().keyPressEvent(event)
 
     def check_login(self):
+        """
+        Validate username and password entered by the user.
+        If valid, store the pro_id and close dialog with success status.
+        Otherwise, show an error message.
+        """
         username = self.username.text()
         password = self.password.text()
 
         pro_id = self.validate_login(username, password)
 
         if pro_id is not None:
-            self.pro_id = pro_id  # ✅ Save pro_id for later access
+            self.pro_id = pro_id  # Save pro_id for later access
             QMessageBox.information(self, "Success", "Login Successful.")
-            self.accept()
+            self.accept()  # Close dialog with success status
         else:
-            QMessageBox.critical(self, "Failure", "Invalid username or password.")
+            QMessageBox.critical(self, "Login Error", "Invalid username or password.")
 
     def validate_login(self, username, password):
+        """
+        Connect to the database and check if the given username/password exists.
+        Returns:
+            pro_id (int): User's project ID if login is successful.
+            None: If login fails or database error occurs.
+        """
         connection = self.db.connect_to_db()
         if connection:
             try:
@@ -79,7 +100,7 @@ class Login(QDialog):
                 result = cursor.fetchone()
 
                 if result:
-                    return result[0]  # Return the pro_id
+                    return result[0]  # Return pro_id
                 else:
                     return None
             except pymysql.MySQLError as e:
@@ -87,21 +108,26 @@ class Login(QDialog):
                 return None
             finally:
                 connection.close()
-
         return None
 
     def handle_exit(self):
-        print("test")
+        """Close the login dialog without authentication."""
         self.close()
-    
+
+
 def run_login_window():
+    """
+    Run the login dialog as a standalone window.
+    Returns:
+        pro_id (int): If login is successful.
+        None: If login fails or is cancelled.
+    """
     app = QApplication(sys.argv)
     login_window = Login()
-    
-    result = login_window.exec_()
-    #print(f"Login dialog closed with result: {result}")  # Debugging statement
 
-    if result == 1:  # 0 means success (accepted)
+    result = login_window.exec_()  # 1 = accepted, 0 = rejected
+
+    if result == 1:
         return login_window.pro_id
     else:
         return None
