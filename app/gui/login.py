@@ -1,61 +1,40 @@
 
-import sys
-import os
-import time
-import glob
-import json
-import socket
-import subprocess
-import threading
-import queue
-import signal
-
-import cv2
-import psutil
-import requests
-
-
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QMainWindow, QDialog
-from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QGuiApplication
-from PyQt5 import QtWidgets
-from PyQt5 import uic
-
+import sys, os, pymysql
 
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QFrame, QGroupBox, QHBoxLayout,
                              QVBoxLayout, QPushButton, QListWidget, QSpacerItem, QSizePolicy, 
-                             QMessageBox, QDesktopWidget, QAction,QLineEdit)
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import Qt, QSize
-from PyQt5 import QtWidgets, QtCore
+                             QMessageBox, QDesktopWidget, QAction, QLineEdit, QMainWindow, QDialog)
+from PyQt5.QtGui import (QPixmap, QIcon, QImage, QGuiApplication)
+from PyQt5.QtCore import (Qt, QSize, QThread, pyqtSignal)
+from PyQt5 import (QtWidgets, QtCore, uic)
 
 from ultralytics import YOLO
+from ..database import DatabaseConnection
 
-import pymysql
-
-from app.database import DatabaseConnection
-
-
-
+from .. import __version__
+print(f"App Version: {__version__}")
 
 class Login(QDialog):
     def __init__(self):
         super().__init__()
         self.pro_id = None  # Store the pro_id here
         
-
         self.db = DatabaseConnection(use_local=True)
 
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        uic.loadUi(f"{BASE_DIR}/ui/login.ui", self)
+        base_path = os.path.dirname(os.path.abspath(__file__)) 
+        ui_path = base_path + "\\ui"
+        resources_path = base_path + "\\resources\\icon"
+
+        uic.loadUi(f"{ui_path}\\login.ui", self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground, False)
         self.showFullScreen()
 
+        self.version_label.setText(f"version: {__version__}")
+
         # Create an action with an icon
-        user_icon = QIcon("icon/user.svg")  # Path to your icon
-        password_icon = QIcon("icon/lock.svg")
+        user_icon = QIcon(f"{resources_path}\\user.svg")  # Path to your icon
+        password_icon = QIcon(f"{resources_path}\\lock.svg")
 
         user_action = QAction(user_icon, "", self.username)
         password_action = QAction(password_icon, "", self.password)
@@ -64,12 +43,9 @@ class Login(QDialog):
         self.username.addAction(user_action, QLineEdit.LeadingPosition)
         self.password.addAction(password_action, QLineEdit.LeadingPosition)
 
-        
+        self.usersIcon.setPixmap(QPixmap(f"{resources_path}\\logo2.png"))
 
-        self.usersIcon.setPixmap(QPixmap("icon/logo2.png"))
-
-
-        self.logo.setPixmap(QPixmap("icon/the_project.png"))
+        self.logo.setPixmap(QPixmap(f"{resources_path}\\the_project.png"))
         self.login.clicked.connect(self.check_login)
         self.exit.clicked.connect(self.handle_exit)
 
