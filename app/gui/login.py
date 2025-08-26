@@ -1,11 +1,13 @@
 import sys, os, pymysql
 
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QFrame, QGroupBox, QHBoxLayout,
-                             QVBoxLayout, QPushButton, QListWidget, QSpacerItem, QSizePolicy, 
-                             QMessageBox, QDesktopWidget, QAction, QLineEdit, QMainWindow, QDialog)
-from PyQt5.QtGui import (QPixmap, QIcon, QImage, QGuiApplication)
-from PyQt5.QtCore import (Qt, QSize, QThread, pyqtSignal)
-from PyQt5 import (QtWidgets, QtCore, uic)
+from PyQt5.QtWidgets import (
+    QApplication, QWidget, QLabel, QFrame, QGroupBox, QHBoxLayout,
+    QVBoxLayout, QPushButton, QListWidget, QSpacerItem, QSizePolicy,
+    QMessageBox, QDesktopWidget, QAction, QLineEdit, QMainWindow
+)
+from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import Qt
+from PyQt5 import uic
 
 from ultralytics import YOLO
 from ..database import DatabaseConnection
@@ -13,26 +15,23 @@ from ..config import UI_PATH, RESOURCES_PATH
 from .. import __version__
 
 
-class Login(QDialog):
+class Login(QMainWindow):
     """
-    Login dialog that handles user authentication via MySQL database.
+    Login window that handles user authentication via MySQL database.
     Displays a fullscreen login window with username/password input,
     validates the user, and stores the authenticated user's project ID.
     """
 
     def __init__(self):
-        """Initialize the login dialog, set up UI, icons, and database connection."""
+        """Initialize the login window, set up UI, icons, and database connection."""
         super().__init__()
         self.pro_id = None  # Store the logged-in user's project ID
+        self.login_success = False  # Track if login succeeded
         self.db = DatabaseConnection(use_local=True)
 
         # Load the login UI file
-        uic.loadUi(os.path.join(UI_PATH, "login.ui"), self)
-
-        # Configure window appearance
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        self.setAttribute(Qt.WA_TranslucentBackground, False)
-        self.showFullScreen()
+        uic.loadUi(os.path.join(UI_PATH, "loginWindow.ui"), self)
+        self.showMaximized()
 
         # Show version info
         self.version_label.setText(f"version: {__version__}")
@@ -53,10 +52,7 @@ class Login(QDialog):
         self.exit.clicked.connect(self.handle_exit)
 
     def keyPressEvent(self, event):
-        """
-        Handle Enter/Return key to trigger login.
-        Otherwise, pass event to the default keyPressEvent handler.
-        """
+        """Handle Enter/Return key to trigger login."""
         if event.key() in (Qt.Key_Return, Qt.Key_Enter):
             self.check_login()
         else:
@@ -65,7 +61,7 @@ class Login(QDialog):
     def check_login(self):
         """
         Validate username and password entered by the user.
-        If valid, store the pro_id and close dialog with success status.
+        If valid, store the pro_id, set success flag, and close window.
         Otherwise, show an error message.
         """
         username = self.username.text()
@@ -75,8 +71,9 @@ class Login(QDialog):
 
         if pro_id is not None:
             self.pro_id = pro_id  # Save pro_id for later access
+            self.login_success = True
             QMessageBox.information(self, "Success", "Login Successful.")
-            self.accept()  # Close dialog with success status
+            self.close()
         else:
             QMessageBox.critical(self, "Login Error", "Invalid username or password.")
 
@@ -107,23 +104,25 @@ class Login(QDialog):
         return None
 
     def handle_exit(self):
-        """Close the login dialog without authentication."""
+        """Close the login window without authentication."""
+        self.login_success = False
         self.close()
 
 
 def run_login_window():
     """
-    Run the login dialog as a standalone window.
+    Run the login window as a standalone application.
     Returns:
         pro_id (int): If login is successful.
         None: If login fails or is cancelled.
     """
     app = QApplication(sys.argv)
     login_window = Login()
+    login_window.show()
 
-    result = login_window.exec_()  # 1 = accepted, 0 = rejected
+    app.exec_()  # Wait until window closes
 
-    if result == 1:
+    if login_window.login_success:
         return login_window.pro_id
     else:
         return None
