@@ -24,7 +24,7 @@ class MyApp(QMainWindow):
 
         # Load UI dynamically
         uic.loadUi(os.path.join(UI_PATH, "main.ui"), self)  
-        self.showFullScreen()
+        self.showMaximized()
 
         # Database connection
         self.db_connection = DatabaseConnection(use_local=True)
@@ -33,8 +33,8 @@ class MyApp(QMainWindow):
         # Load test widget and extract 'dashboard'
         component = DashboardWidget()
         self.dashboard = component.dashboard
-        self.saved_record = component.saved_record
         self.live_detection_btn = component.live_detection_btn
+        self.saved_record = component.saved_record
         self.user_name_label = component.user_name_label
         self.logout = component.logout
 
